@@ -74,6 +74,78 @@ body { font-family: 'Inter', sans-serif; background: var(--white); color: var(--
   font-size:12px;
   margin-right:6px;
 }
+  :root {
+  --shadow-sm: 0 2px 6px rgba(0,0,0,0.06);
+  --shadow-md: 0 10px 28px rgba(0,0,0,0.10);
+  --shadow-lg: 0 18px 50px rgba(0,0,0,0.14);
+}
+
+/* GLOBAL DEPTH FIX */
+.card,
+.industry-card,
+.product-card,
+.ai-card {
+  box-shadow: var(--shadow-sm);
+  transition: all 0.25s ease;
+  border-radius: 12px;
+}
+
+.card:hover,
+.industry-card:hover,
+.product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* BODY FIX (this alone improves “cheap look”) */
+body {
+  background: linear-gradient(180deg, #ffffff 0%, #f6f8fb 100%);
+}
+
+/* TYPOGRAPHY HIERARCHY */
+.section-title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+.card-title {
+  letter-spacing: -0.4px;
+}
+
+/* BUTTON SYSTEM FIX */
+.btn-primary {
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(27,58,82,0.18);
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+}
+
+.btn-login,
+.btn-getstarted {
+  border-radius: 10px;
+}
+
+/* AI POLISH (MAKES IT FEEL LIKE A REAL PRODUCT) */
+.ai-card {
+  background: linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
+  border-radius: 14px;
+  padding: 2.5rem;
+}
+
+.ai-input {
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* INDUSTRY GRID SPACING FIX */
+.industry-card {
+  padding: 1.5rem;
+  border-radius: 14px;
+}
 </style>
 </head>
 
