@@ -1,356 +1,625 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Moneris — AI Product Selector</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-<style>
-/* ===== YOUR ORIGINAL CSS (UNCHANGED) ===== */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --navy: #1B3A52; --navy-light: #2C5282; --red: #E74C3C;
-  --cyan: #4A9FBE; --gray-light: #F5F5F5; --gray-med: #E8E8E8;
-  --text-dark: #1B3A52; --text-gray: #666666;
-  --white: #FFFFFF; --border: #D0D0D0; --transition: all 0.2s ease;
-}
-html { font-size: 16px; }
-body { font-family: 'Inter', sans-serif; background: var(--white); color: var(--text-dark); min-height: 100vh; }
-
-/* (ALL YOUR EXISTING CSS STAYS EXACTLY THE SAME — I DID NOT REMOVE ANYTHING) */
-/* I’m only ADDING AI styles below */
-
-.ai-card{
-  background:var(--white);
-  border:1px solid var(--gray-med);
-  border-radius:8px;
-  padding:2.5rem;
-  margin:2rem 0;
-}
-
-.ai-title{
-  font-size:32px;
-  font-weight:700;
-  margin-bottom:10px;
-}
-
-.ai-sub{
-  font-size:14px;
-  color:var(--text-gray);
-  line-height:1.6;
-  margin-bottom:18px;
-}
-
-.ai-input{
-  width:100%;
-  min-height:140px;
-  padding:16px;
-  border:1.5px solid var(--border);
-  border-radius:8px;
-  font-size:15px;
-  font-family:inherit;
-  outline:none;
-}
-
-.ai-input:focus{
-  border-color:var(--navy);
-}
-
-.ai-actions{
-  display:flex;
-  gap:10px;
-  margin-top:14px;
-  flex-wrap:wrap;
-}
-
-.ai-pill{
-  display:inline-block;
-  padding:6px 10px;
-  background:#E6F1FB;
-  border-radius:999px;
-  font-size:12px;
-  margin-right:6px;
-}
-  :root {
-  --shadow-sm: 0 2px 6px rgba(0,0,0,0.06);
-  --shadow-md: 0 10px 28px rgba(0,0,0,0.10);
-  --shadow-lg: 0 18px 50px rgba(0,0,0,0.14);
-}
-
-/* GLOBAL DEPTH FIX */
-.card,
-.industry-card,
-.product-card,
-.ai-card {
-  box-shadow: var(--shadow-sm);
-  transition: all 0.25s ease;
-  border-radius: 12px;
-}
-
-.card:hover,
-.industry-card:hover,
-.product-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
-
-/* BODY FIX (this alone improves “cheap look”) */
-body {
-  background: linear-gradient(180deg, #ffffff 0%, #f6f8fb 100%);
-}
-
-/* TYPOGRAPHY HIERARCHY */
-.section-title {
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: -0.3px;
-}
-
-.card-title {
-  letter-spacing: -0.4px;
-}
-
-/* BUTTON SYSTEM FIX */
-.btn-primary {
-  border-radius: 10px;
-  box-shadow: 0 3px 10px rgba(27,58,82,0.18);
-}
-
-.btn-primary:hover {
-  transform: translateY(-1px);
-}
-
-.btn-login,
-.btn-getstarted {
-  border-radius: 10px;
-}
-
-/* AI POLISH (MAKES IT FEEL LIKE A REAL PRODUCT) */
-.ai-card {
-  background: linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
-  border-radius: 14px;
-  padding: 2.5rem;
-}
-
-.ai-input {
-  border-radius: 12px;
-  background: #fff;
-  box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
-}
-
-/* INDUSTRY GRID SPACING FIX */
-.industry-card {
-  padding: 1.5rem;
-  border-radius: 14px;
-}
-</style>
-</head>
-
-<body>
-
-<!-- TOPBAR (UNCHANGED) -->
-<div class="topbar-info">
-  <a href="#">Call sales</a>
-  <a href="#">Service Status</a>
-  <a href="#">Contact us</a>
-  <a href="#">About Moneris</a>
-  <a href="#">Careers</a>
-  <select><option>English</option></select>
-</div>
-
-<div class="topbar">
-  <svg class="logo-svg" viewBox="0 0 160 52">
-    <text x="0" y="38" font-size="30" font-weight="700">Moneris</text>
-  </svg>
-
-  <div class="topbar-nav">
-    <a>Solutions</a><a>Industries</a><a>Partners</a><a>Resources</a>
-  </div>
-
-  <div class="topbar-right">
-    <button class="btn-login">Login</button>
-    <button class="btn-getstarted">Get Started</button>
-  </div>
-</div>
-
-<div class="container">
-
-<!-- HERO (UPDATED SLIGHTLY) -->
-<div class="hero">
-  <h1>Moneris <span class="red">AI Product Matcher</span></h1>
-  <p>Describe your business and get a recommended payment setup instantly.</p>
-</div>
-
-<!-- AI ENTRY -->
-<div id="shell"></div>
-
-<!-- INDUSTRY CARDS (UNCHANGED) -->
-<div class="industry-section">
-  <div class="section-title">Or explore by industry</div>
-
-  <div class="industry-grid">
-    <button class="industry-card" onclick="startQuiz('retail')">🛍️ Retail</button>
-    <button class="industry-card" onclick="startQuiz('restaurant')">🍽️ Restaurants</button>
-    <button class="industry-card" onclick="startQuiz('health')">💇 Health & Beauty</button>
-    <button class="industry-card" onclick="startQuiz('enterprise')">🏢 Enterprise</button>
-  </div>
-</div>
-
-</div>
-
-<!-- YOUR ORIGINAL JS (UNCHANGED EXCEPT ENTRY POINT) -->
+<!-- =========================================
+REPLACE YOUR ENTIRE <script> ... </script>
+WITH THIS VERSION
+========================================= -->
 
 <script>
 
-/* =========================
-PRODUCTS (UNCHANGED)
-========================= */
+/* =========================================
+PRODUCTS
+========================================= */
 const P = {
-  goTerminal:{name:"Go Terminal",desc:"Portable smart terminal",icon:"💳"},
-  goPlus:{name:"Go Plus",desc:"All-in-one smart POS",icon:"📱"},
-  goRetail:{name:"Go Retail",desc:"Mobile POS for small business",icon:"🛍️"},
-  totalCommerce:{name:"Total Commerce",desc:"Omnichannel POS + ecommerce",icon:"🌐"},
-  goRestaurant:{name:"Go Restaurant",desc:"Restaurant POS system",icon:"🍽️"},
-  monerisOnline:{name:"Moneris Online",desc:"Ecommerce payments",icon:"💻"},
-  paydInvoicing:{name:"PAYD Invoicing",desc:"Send invoices & get paid",icon:"📧"},
-  goPinPad:{name:"Go PIN Pad",desc:"Countertop payment device",icon:"🔢"}
+  goTerminal:{name:"Moneris Go Terminal",desc:"Portable smart terminal for line busting, curbside, and countertop payments.",icon:"💳"},
+  goPlus:{name:"Moneris Go Plus",desc:"Smart all-in-one POS with built-in printer and touchscreen.",icon:"📱"},
+  goRetail:{name:"Moneris Go Retail",desc:"Retail POS for inventory, staff, and in-store selling.",icon:"🛍️"},
+  totalCommerce:{name:"Moneris Total Commerce",desc:"Unified commerce across in-store and online channels.",icon:"🌐"},
+  goRestaurant:{name:"Moneris Go Restaurant",desc:"Restaurant POS built for cafés, QSRs, and food service.",icon:"🍽️"},
+  touchBistro:{name:"Moneris + TouchBistro",desc:"Advanced restaurant management with tableside support.",icon:"🍷"},
+  monerisOnline:{name:"Moneris Online",desc:"Sell online with integrated payments and ecommerce.",icon:"💻"},
+  paydInvoicing:{name:"PAYD Invoicing",desc:"Send invoices and collect payments remotely.",icon:"📧"},
+  goPinPad:{name:"Moneris Go PIN Pad",desc:"Countertop PIN pad for integrated POS environments.",icon:"🔢"}
 };
 
-/* =========================
+/* =========================================
+INDUSTRIES
+========================================= */
+const industries = {
+  homepage:{
+    title:"Moneris AI Product Matcher",
+    subtitle:"Describe your business and we’ll recommend the right setup."
+  },
+
+  retail:{
+    title:"Retail AI Advisor",
+    subtitle:"Tell us about your retail business."
+  },
+
+  restaurant:{
+    title:"Restaurant AI Advisor",
+    subtitle:"Tell us about your restaurant operation."
+  },
+
+  health:{
+    title:"Health & Beauty AI Advisor",
+    subtitle:"Tell us about your salon, spa, or clinic."
+  },
+
+  enterprise:{
+    title:"Enterprise AI Advisor",
+    subtitle:"Tell us about your organization."
+  },
+
+  professional:{
+    title:"Professional Services AI Advisor",
+    subtitle:"Tell us about your business."
+  },
+
+  public:{
+    title:"Public Sector AI Advisor",
+    subtitle:"Tell us about your organization."
+  },
+
+  nonprofit:{
+    title:"Not-for-profit AI Advisor",
+    subtitle:"Tell us about your mission and operations."
+  }
+};
+
+/* =========================================
 STATE
-========================= */
-let st = {
-  quiz:null,
-  step:0,
-  ans:{},
-  gateAns:null
-};
+========================================= */
+let currentIndustry = "homepage";
 
-/* =========================
-AI ENTRY UI
-========================= */
-function renderAI(){
-document.getElementById("shell").innerHTML = `
-<div class="ai-card">
+/* =========================================
+INIT
+========================================= */
+renderAI("homepage");
 
-<div class="ai-title">
-Tell us about your business
-</div>
+/* =========================================
+INDUSTRY CARD CLICK
+========================================= */
+function startQuiz(industry){
 
-<div class="ai-sub">
-Describe what you do and we’ll recommend a setup.
-</div>
+  currentIndustry = industry;
 
-<div>
-<span class="ai-pill">Retail store</span>
-<span class="ai-pill">Café</span>
-<span class="ai-pill">Salon</span>
-</div>
+  renderAI(industry);
 
-<textarea class="ai-input" id="aiInput"
-placeholder="Example:
-I run a 2-location café and want online ordering and faster checkout."></textarea>
-
-<div class="ai-actions">
-
-<button class="btn-getstarted" onclick="runAI()">
-Find my setup
-</button>
-
-<button class="btn-login" onclick="startQuiz('homepage')">
-Take quiz instead
-</button>
-
-</div>
-
-</div>
-`;
+  document.getElementById("shell")
+    .scrollIntoView({behavior:"smooth"});
 }
 
-/* =========================
+/* =========================================
+RENDER AI SCREEN
+========================================= */
+function renderAI(industry){
+
+  const cfg = industries[industry];
+
+  const placeholders = {
+    homepage:
+`Example:
+I run a small retail store and want better checkout and online payments.`,
+
+    retail:
+`Example:
+I own a clothing boutique with 2 locations and around 1,000 SKUs. We want inventory syncing and online sales.`,
+
+    restaurant:
+`Example:
+I run a café and want faster checkout, online ordering, and better staff management.`,
+
+    health:
+`Example:
+I run a salon and want chairside payments, tipping, and appointment integrations.`,
+
+    enterprise:
+`Example:
+We operate 35 locations across Canada and need centralized reporting and enterprise support.`,
+
+    professional:
+`Example:
+I own an accounting firm and want invoicing plus remote payments.`,
+
+    public:
+`Example:
+We’re a municipality looking to modernize in-person and online payments.`,
+
+    nonprofit:
+`Example:
+We run a charity and need online donations plus affordable in-person payments.`
+  };
+
+  document.getElementById("shell").innerHTML = `
+
+  <div class="card">
+
+    <div class="card-label">
+      ${industry === "homepage"
+        ? "AI EXPERIENCE"
+        : industry.toUpperCase()}
+    </div>
+
+    <div class="card-title">
+      ${cfg.title}
+    </div>
+
+    <div class="card-subtitle">
+      ${cfg.subtitle}
+    </div>
+
+    <div style="
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-bottom:16px;
+    ">
+
+      <span class="path-badge">AI powered</span>
+
+      ${
+        industry !== "homepage"
+        ? `<span class="ep-badge ep-b">${industry}</span>`
+        : ``
+      }
+
+    </div>
+
+    <textarea
+      id="aiInput"
+      class="form-input"
+      style="
+        min-height:180px;
+        resize:vertical;
+        padding:16px;
+        line-height:1.6;
+      "
+      placeholder="${placeholders[industry]}"
+    ></textarea>
+
+    <div style="
+      display:flex;
+      gap:10px;
+      margin-top:18px;
+      flex-wrap:wrap;
+    ">
+
+      <button
+        class="btn-submit"
+        onclick="runAI('${industry}')"
+      >
+        Find my setup
+      </button>
+
+      ${
+        industry !== "homepage"
+        ? `
+        <button
+          class="btn-outline"
+          style="width:auto;"
+          onclick="renderAI('homepage')"
+        >
+          Back to homepage
+        </button>
+        `
+        : `
+        <button
+          class="btn-outline"
+          style="width:auto;"
+          onclick="showClassicQuiz()"
+        >
+          Classic quiz
+        </button>
+        `
+      }
+
+    </div>
+
+  </div>
+  `;
+}
+
+/* =========================================
 FAKE AI ENGINE
-========================= */
-function runAI(){
+========================================= */
+function runAI(industry){
 
-const text = document.getElementById("aiInput").value.toLowerCase();
+  const text = document
+    .getElementById("aiInput")
+    .value
+    .toLowerCase();
 
-if(!text.trim()) return;
+  if(!text.trim()) return;
 
-document.getElementById("shell").innerHTML = `
-<div class="card">
-<div class="card-title">Analyzing your business…</div>
-<p>Matching best Moneris setup...</p>
-</div>
-`;
+  document.getElementById("shell").innerHTML = `
 
-setTimeout(()=>{
+  <div class="card">
 
-let quiz="homepage";
+    <div class="card-label">
+      AI ANALYSIS
+    </div>
 
-if(text.includes("restaurant")||text.includes("cafe")) quiz="restaurant";
-if(text.includes("retail")||text.includes("store")) quiz="retail";
-if(text.includes("salon")||text.includes("spa")) quiz="health";
-if(text.includes("enterprise")) quiz="enterprise";
+    <div class="card-title">
+      Analyzing your business...
+    </div>
 
-st.quiz = quiz;
-st.ans = {
-  0:text.includes("online")?"Both in-person and online":"In-person only",
-  1:text.includes("expand")?"Planning to expand":"Just one"
-};
+    <div class="card-subtitle">
+      Matching your needs against Moneris solutions.
+    </div>
 
-renderResults();
+    <div class="pbar">
+      <div class="pfill" style="width:100%"></div>
+    </div>
 
-},1500);
+  </div>
+  `;
+
+  setTimeout(() => {
+
+    let recs = [];
+    let enterprise = false;
+
+    /* =========================================
+    UNIVERSAL DETECTION
+    ========================================= */
+
+    if(
+      text.includes("multi") ||
+      text.includes("locations") ||
+      text.includes("enterprise") ||
+      text.includes("franchise") ||
+      text.includes("100+") ||
+      text.includes("chain")
+    ){
+      enterprise = true;
+    }
+
+    /* =========================================
+    RETAIL
+    ========================================= */
+
+    if(industry === "retail"){
+
+      recs.push("goRetail");
+      recs.push("goTerminal");
+
+      if(
+        text.includes("online") ||
+        text.includes("ecommerce") ||
+        text.includes("shopify")
+      ){
+        recs.unshift("totalCommerce");
+      }
+
+      if(enterprise){
+        recs.unshift("goPinPad");
+      }
+    }
+
+    /* =========================================
+    RESTAURANT
+    ========================================= */
+
+    else if(industry === "restaurant"){
+
+      recs.push("goRestaurant");
+      recs.push("goTerminal");
+
+      if(
+        text.includes("full service") ||
+        text.includes("tableside") ||
+        text.includes("fine dining")
+      ){
+        recs.unshift("touchBistro");
+      }
+    }
+
+    /* =========================================
+    HEALTH
+    ========================================= */
+
+    else if(industry === "health"){
+
+      recs.push("goPlus");
+      recs.push("goTerminal");
+
+      if(
+        text.includes("retail") ||
+        text.includes("products")
+      ){
+        recs.unshift("goRetail");
+      }
+    }
+
+    /* =========================================
+    PROFESSIONAL
+    ========================================= */
+
+    else if(industry === "professional"){
+
+      recs.push("paydInvoicing");
+      recs.push("goTerminal");
+
+      if(
+        text.includes("online") ||
+        text.includes("remote")
+      ){
+        recs.unshift("monerisOnline");
+      }
+    }
+
+    /* =========================================
+    PUBLIC
+    ========================================= */
+
+    else if(industry === "public"){
+
+      recs.push("goPinPad");
+      recs.push("monerisOnline");
+      recs.push("goTerminal");
+    }
+
+    /* =========================================
+    NONPROFIT
+    ========================================= */
+
+    else if(industry === "nonprofit"){
+
+      recs.push("monerisOnline");
+      recs.push("paydInvoicing");
+      recs.push("goTerminal");
+    }
+
+    /* =========================================
+    ENTERPRISE
+    ========================================= */
+
+    else if(industry === "enterprise"){
+
+      enterprise = true;
+
+      recs.push("goPinPad");
+      recs.push("totalCommerce");
+      recs.push("monerisOnline");
+    }
+
+    /* =========================================
+    HOMEPAGE AUTO-DETECTION
+    ========================================= */
+
+    else {
+
+      if(
+        text.includes("restaurant") ||
+        text.includes("cafe") ||
+        text.includes("food")
+      ){
+        industry = "restaurant";
+      }
+
+      else if(
+        text.includes("salon") ||
+        text.includes("spa") ||
+        text.includes("clinic")
+      ){
+        industry = "health";
+      }
+
+      else if(
+        text.includes("government") ||
+        text.includes("municipal")
+      ){
+        industry = "public";
+      }
+
+      else if(
+        text.includes("charity") ||
+        text.includes("donation")
+      ){
+        industry = "nonprofit";
+      }
+
+      else if(
+        text.includes("law") ||
+        text.includes("accounting") ||
+        text.includes("firm")
+      ){
+        industry = "professional";
+      }
+
+      else {
+        industry = "retail";
+      }
+
+      runAI(industry);
+
+      return;
+    }
+
+    renderResults(recs, enterprise, industry);
+
+  }, 1400);
 }
 
-/* =========================
-RESULT ENGINE (SIMPLIFIED REUSE)
-========================= */
-function renderResults(){
+/* =========================================
+RESULTS
+========================================= */
+function renderResults(recs, enterprise, industry){
 
-document.getElementById("shell").innerHTML = `
-<div class="card">
+  const unique = [...new Set(recs)];
 
-<div class="card-title">Recommended setup</div>
+  document.getElementById("shell").innerHTML = `
 
-<div class="product-grid">
+  <div class="card">
 
-${["goRetail","goTerminal","totalCommerce"].map(k=>{
-const p=P[k];
-return `
-<div class="product-card">
-<div class="product-icon">${p.icon}</div>
-<div class="product-name">${p.name}</div>
-<div class="product-desc">${p.desc}</div>
-<button class="btn-primary">Order</button>
-</div>`;
-}).join("")}
+    <span class="ep-badge ${
+      enterprise ? "ep-b" : "ep-g"
+    }">
 
-</div>
+      ${
+        enterprise
+        ? "Enterprise recommendation"
+        : "Recommended setup"
+      }
 
-<button class="btn-login" onclick="renderAI()">
-Try another business
-</button>
+    </span>
 
-</div>
-`;
+    <div class="card-title">
+      Here's what we'd recommend.
+    </div>
 
+    <div class="card-subtitle">
+
+      ${
+        enterprise
+        ? "Based on your scale and operational needs, these solutions are the strongest fit."
+        : "Based on your business goals, these solutions are the best fit."
+      }
+
+    </div>
+
+    <div class="product-grid">
+
+      ${unique.map((k, i) => {
+
+        const p = P[k];
+
+        return `
+
+        <div class="product-card ${i===0?'best':''}">
+
+          ${
+            i===0
+            ? `<div class="product-badge">Best option</div>`
+            : `<div style="height:28px;"></div>`
+          }
+
+          <div class="product-icon">
+            ${p.icon}
+          </div>
+
+          <div class="product-name">
+            ${p.name}
+          </div>
+
+          <div class="product-desc">
+            ${p.desc}
+          </div>
+
+          <button class="btn-primary">
+            Learn more
+          </button>
+
+          <button class="btn-outline">
+            Talk to sales
+          </button>
+
+        </div>
+
+        `;
+
+      }).join("")}
+
+    </div>
+
+    ${
+      enterprise
+      ? `
+      <div class="dvd"></div>
+
+      <div class="card-subtitle" style="margin-bottom:18px;">
+        Your requirements may benefit from a tailored enterprise setup.
+      </div>
+
+      <div class="contact-form">
+
+        <div class="form-row">
+
+          <div class="form-group">
+            <div class="form-label">First name</div>
+            <input class="form-input" placeholder="Jane">
+          </div>
+
+          <div class="form-group">
+            <div class="form-label">Last name</div>
+            <input class="form-input" placeholder="Smith">
+          </div>
+
+        </div>
+
+        <div class="form-group">
+          <div class="form-label">Business email</div>
+          <input class="form-input" placeholder="jane@company.com">
+        </div>
+
+        <button class="btn-submit">
+          Contact enterprise sales
+        </button>
+
+      </div>
+      `
+      : ``
+    }
+
+    <div class="dvd"></div>
+
+    <div style="
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    ">
+
+      <button
+        class="btn-outline"
+        style="width:auto;"
+        onclick="renderAI('${industry}')"
+      >
+        Try again
+      </button>
+
+      <button
+        class="btn-outline"
+        style="width:auto;"
+        onclick="renderAI('homepage')"
+      >
+        Homepage
+      </button>
+
+    </div>
+
+  </div>
+  `;
 }
 
-/* =========================
-INDUSTRY SWITCH (HOOK ONLY)
-========================= */
-function startQuiz(q){
-alert("Industry flow still supported — you already built this.");
-}
+/* =========================================
+OPTIONAL CLASSIC QUIZ PLACEHOLDER
+========================================= */
+function showClassicQuiz(){
 
-/* INIT */
-renderAI();
+  document.getElementById("shell").innerHTML = `
+
+  <div class="card">
+
+    <div class="card-label">
+      CLASSIC EXPERIENCE
+    </div>
+
+    <div class="card-title">
+      Step-by-step quiz coming soon.
+    </div>
+
+    <div class="card-subtitle">
+      This demo currently focuses on the AI-guided experience.
+    </div>
+
+    <button
+      class="btn-submit"
+      onclick="renderAI('homepage')"
+    >
+      Back to AI experience
+    </button>
+
+  </div>
+  `;
+}
 
 </script>
-
-</body>
-</html>
