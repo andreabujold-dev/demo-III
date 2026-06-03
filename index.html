@@ -1175,28 +1175,19 @@ recs.push("monerisOnline");
 /* HOMEPAGE */
 
 else{
-runAI(profile.inferredIndustry);
-return;
-}
 
-renderResults(recs, enterprise, industry, profile);
+  const newIndustry = profile.inferredIndustry;
 
-},1400);
+  renderAI(newIndustry);
 
+  setTimeout(() => {
+    document.getElementById("aiInput").value = text;
+    runAI(newIndustry);
+  }, 100);
+
+  return;
 }
   
-function getReason(key, profile){
-
-if(key === "goRetail") return "Strong match for inventory-heavy retail operations";
-if(key === "totalCommerce") return "Supports both online and in-store sales";
-if(key === "monerisOnline") return "Best for ecommerce and online payments";
-if(key === "paydInvoicing") return "Ideal for invoicing and remote billing";
-if(key === "goTerminal") return "Flexible mobile payment solution";
-if(key === "goPinPad") return "Built for enterprise scale environments";
-if(key === "goRestaurant") return "Designed for restaurant workflows";
-
-return "General fit based on your business profile";
-}
 /* =========================================
 RESULTS
 ========================================= */
