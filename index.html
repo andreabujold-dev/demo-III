@@ -1179,7 +1179,7 @@ runAI(profile.inferredIndustry);
 return;
 }
 
-renderResults(recs, enterprise, industry);
+renderResults(recs, enterprise, industry, profile);
 
 },1400);
 
@@ -1201,8 +1201,8 @@ return "General fit based on your business profile";
 RESULTS
 ========================================= */
 
-function renderResults(recs, enterprise, industry){
-
+function renderResults(recs, enterprise, industry, profile){
+  
 const unique = [...new Set(recs)];
 
 document.getElementById("shell").innerHTML = `
