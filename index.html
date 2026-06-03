@@ -926,7 +926,97 @@ Back to homepage
 `;
 
 }
+/* =========================================
+AI INTELLIGENCE LAYER (ADD ONLY)
+========================================= */
 
+function analyzeBusiness(text){
+
+  const size = detectSize(text);
+  const channels = detectChannels(text);
+  const needs = detectNeeds(text);
+  const inferredIndustry = detectIndustry(text);
+
+  const confidence = calculateConfidence({ size, channels, needs, inferredIndustry });
+  const summary = buildSummary({ size, channels, needs, inferredIndustry });
+  const opportunity = calculateOpportunity({ size, channels, needs });
+
+  return {
+    size,
+    channels,
+    needs,
+    inferredIndustry,
+    confidence,
+    summary,
+    opportunity
+  };
+}
+
+/* SIZE */
+function detectSize(text){
+  if(/enterprise|global/.test(text)) return "enterprise";
+  if(/multi|locations|franchise|chain/.test(text)) return "mid-market";
+  return "small";
+}
+
+/* CHANNELS */
+function detectChannels(text){
+  let c = [];
+  if(/online|ecommerce|website/.test(text)) c.push("online");
+  if(/store|in-store|retail|location/.test(text)) c.push("in-store");
+  return c.length ? c : ["in-store"];
+}
+
+/* NEEDS */
+function detectNeeds(text){
+  let n = [];
+  if(/grow|expand|scale/.test(text)) n.push("growth");
+  if(/inventory|stock/.test(text)) n.push("inventory");
+  if(/mobile|tablet/.test(text)) n.push("mobility");
+  if(/invoice|billing|payments|remote/.test(text)) n.push("invoicing");
+  return n;
+}
+
+/* INDUSTRY AUTO-ROUTING */
+function detectIndustry(text){
+  if(/restaurant|cafe/.test(text)) return "restaurant";
+  if(/salon|spa/.test(text)) return "health";
+  if(/consult|agency/.test(text)) return "professional";
+  if(/donation|charity/.test(text)) return "nonprofit";
+  return "retail";
+}
+
+/* CONFIDENCE */
+function calculateConfidence(p){
+  let score = 0;
+  if(p.size) score++;
+  if(p.channels.length) score++;
+  if(p.needs.length) score++;
+  if(p.inferredIndustry) score++;
+  return Math.round((score/4)*100);
+}
+
+/* SUMMARY */
+function buildSummary(p){
+  return `${capitalize(p.size)} ${p.inferredIndustry} business operating ${p.channels.join(" & ")} with focus on ${p.needs.join(", ") || "payments"}.`;
+}
+
+/* OPPORTUNITY */
+function calculateOpportunity(p){
+  let score = 0;
+  if(p.size === "enterprise") score += 3;
+  else if(p.size === "mid-market") score += 2;
+  else score += 1;
+
+  score += p.channels.length;
+  score += p.needs.length;
+
+  return score;
+}
+
+function capitalize(s){
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
 /* =========================================
 AI ENGINE
 ========================================= */
@@ -937,6 +1027,7 @@ const text = document
 .getElementById("aiInput")
 .value
 .toLowerCase();
+const profile = analyzeBusiness(text);
 
 if(!text.trim()) return;
 
@@ -967,7 +1058,7 @@ Matching your needs against Moneris solutions.
 setTimeout(()=>{
 
 let recs = [];
-let enterprise = false;
+let enterprise = profile.size === "enterprise";
 
 /* ENTERPRISE DETECTION */
 
@@ -1084,26 +1175,8 @@ recs.push("monerisOnline");
 /* HOMEPAGE */
 
 else{
-
-if(
-text.includes("restaurant") ||
-text.includes("cafe")
-){
-runAI("restaurant");
+runAI(profile.inferredIndustry);
 return;
-}
-
-if(
-text.includes("salon") ||
-text.includes("spa")
-){
-runAI("health");
-return;
-}
-
-runAI("retail");
-return;
-
 }
 
 renderResults(recs, enterprise, industry);
@@ -1111,7 +1184,19 @@ renderResults(recs, enterprise, industry);
 },1400);
 
 }
+  
+function getReason(key, profile){
 
+if(key === "goRetail") return "Strong match for inventory-heavy retail operations";
+if(key === "totalCommerce") return "Supports both online and in-store sales";
+if(key === "monerisOnline") return "Best for ecommerce and online payments";
+if(key === "paydInvoicing") return "Ideal for invoicing and remote billing";
+if(key === "goTerminal") return "Flexible mobile payment solution";
+if(key === "goPinPad") return "Built for enterprise scale environments";
+if(key === "goRestaurant") return "Designed for restaurant workflows";
+
+return "General fit based on your business profile";
+}
 /* =========================================
 RESULTS
 ========================================= */
@@ -1140,7 +1225,14 @@ enterprise
 Here's what we'd recommend.
 </div>
 
+
 <div class="card-subtitle">
+
+${profile.summary}
+<br><br>
+Confidence: ${profile.confidence}% • Opportunity Score: ${profile.opportunity}
+
+<br><br>
 
 ${
 enterprise
@@ -1149,6 +1241,7 @@ enterprise
 }
 
 </div>
+
 
 <div class="product-grid">
 
@@ -1176,6 +1269,8 @@ ${p.name}
 
 <div class="product-desc">
 ${p.desc}
+<br><br>
+<b>Why:</b> ${getReason(k, profile)}
 </div>
 
 <button class="btn-primary">
