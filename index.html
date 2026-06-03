@@ -11,10 +11,6 @@
 
 <style>
 
-/* =========================================
-YOUR ORIGINAL STYLING — UNTOUCHED
-========================================= */
-
 *, *::before, *::after {
   box-sizing:border-box;
   margin:0;
@@ -35,7 +31,9 @@ YOUR ORIGINAL STYLING — UNTOUCHED
   --transition:all .2s ease;
 }
 
-html{ font-size:16px; }
+html{
+  font-size:16px;
+}
 
 body{
   font-family:'Inter',sans-serif;
@@ -45,7 +43,7 @@ body{
 }
 
 /* =========================================
-TOP BAR (UNCHANGED)
+TOP BAR
 ========================================= */
 
 .topbar-info{
@@ -76,10 +74,14 @@ TOP BAR (UNCHANGED)
   z-index:100;
 }
 
-.logo-svg{ height:36px; }
+.logo-svg{
+  height:36px;
+  width:auto;
+}
 
 .topbar-nav{
   display:flex;
+  align-items:center;
   gap:2.5rem;
   flex:1;
   margin-left:3rem;
@@ -93,25 +95,88 @@ TOP BAR (UNCHANGED)
   cursor:pointer;
 }
 
+.topbar-nav a::after{
+  content:'▼';
+  font-size:8px;
+  margin-left:4px;
+  opacity:.6;
+}
+
+.topbar-right{
+  display:flex;
+  align-items:center;
+  gap:1rem;
+}
+
 /* =========================================
-BUTTONS (UNCHANGED)
+BUTTONS
 ========================================= */
 
 .btn-login{
+  color:var(--text-dark);
   border:1px solid var(--border);
   padding:8px 16px;
+  border-radius:4px;
   background:var(--white);
+  cursor:pointer;
+  font-size:13px;
+  font-weight:500;
+  font-family:inherit;
 }
 
 .btn-getstarted{
   background:var(--red);
-  color:#fff;
+  color:var(--white);
   border:none;
   padding:8px 16px;
+  border-radius:4px;
+  font-weight:600;
+  cursor:pointer;
+  font-size:13px;
+  font-family:inherit;
+}
+
+.btn-primary{
+  background:var(--navy);
+  color:var(--white);
+  border:none;
+  padding:10px 16px;
+  border-radius:4px;
+  font-weight:600;
+  cursor:pointer;
+  font-size:13px;
+  width:100%;
+  font-family:inherit;
+}
+
+.btn-outline{
+  background:var(--white);
+  color:var(--text-dark);
+  border:1.5px solid var(--border);
+  padding:10px 16px;
+  border-radius:4px;
+  font-weight:600;
+  cursor:pointer;
+  font-size:13px;
+  width:100%;
+  margin-top:8px;
+  font-family:inherit;
+}
+
+.btn-submit{
+  background:var(--red);
+  color:var(--white);
+  border:none;
+  padding:12px 24px;
+  border-radius:4px;
+  font-weight:700;
+  cursor:pointer;
+  font-size:14px;
+  font-family:inherit;
 }
 
 /* =========================================
-LAYOUT (UNCHANGED)
+LAYOUT
 ========================================= */
 
 .container{
@@ -121,15 +186,352 @@ LAYOUT (UNCHANGED)
 }
 
 .hero{
-  background:linear-gradient(135deg,var(--navy),#0f2a3a);
-  color:#fff;
+  background:linear-gradient(
+    135deg,
+    var(--navy) 0%,
+    #0f2a3a 100%
+  );
+
+  color:var(--white);
   padding:4rem 2rem;
   margin:2rem 0;
   border-radius:8px;
   text-align:center;
 }
 
-/* cards, grid, etc remain untouched in your original file */
+.hero h1{
+  font-size:42px;
+  font-weight:700;
+  margin-bottom:1rem;
+}
+
+.hero .red{
+  color:var(--red);
+}
+
+.hero p{
+  font-size:15px;
+  max-width:700px;
+  margin:0 auto;
+  line-height:1.7;
+  opacity:.9;
+}
+
+/* =========================================
+CARDS
+========================================= */
+
+.card{
+  background:var(--white);
+  border:1px solid var(--gray-med);
+  border-radius:8px;
+  padding:2.5rem;
+  margin-bottom:2rem;
+  animation:fadeIn .25s ease;
+}
+
+.card-label{
+  font-size:12px;
+  color:var(--cyan);
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.4px;
+  margin-bottom:1rem;
+}
+
+.card-title{
+  font-size:30px;
+  font-weight:700;
+  margin-bottom:.75rem;
+  line-height:1.3;
+}
+
+.card-subtitle{
+  font-size:14px;
+  color:var(--text-gray);
+  line-height:1.7;
+  margin-bottom:1.5rem;
+}
+
+/* =========================================
+INPUTS
+========================================= */
+
+.form-input{
+  width:100%;
+  padding:14px 16px;
+  border:1.5px solid var(--border);
+  border-radius:4px;
+  font-size:14px;
+  font-family:inherit;
+  outline:none;
+  transition:var(--transition);
+}
+
+.form-input:focus{
+  border-color:var(--navy);
+}
+
+textarea.form-input{
+  min-height:180px;
+  resize:vertical;
+  line-height:1.6;
+}
+
+/* =========================================
+BADGES
+========================================= */
+
+.path-badge{
+  display:inline-block;
+  background:linear-gradient(
+    135deg,
+    var(--cyan),
+    var(--navy)
+  );
+
+  color:var(--white);
+  padding:5px 12px;
+  border-radius:4px;
+  font-size:11px;
+  font-weight:700;
+  text-transform:uppercase;
+  margin-right:8px;
+}
+
+.ep-badge{
+  display:inline-block;
+  padding:5px 12px;
+  border-radius:4px;
+  font-size:11px;
+  font-weight:700;
+  text-transform:uppercase;
+}
+
+.ep-g{
+  background:#E8F5F0;
+  color:#0A5C42;
+}
+
+.ep-b{
+  background:#E6F1FB;
+  color:#0C447C;
+}
+
+/* =========================================
+PRODUCTS
+========================================= */
+
+.product-grid{
+  display:grid;
+  grid-template-columns:repeat(
+    auto-fill,
+    minmax(260px,1fr)
+  );
+
+  gap:1.25rem;
+  margin:1.5rem 0;
+}
+
+.product-card{
+  border:1px solid var(--gray-med);
+  border-radius:8px;
+  padding:1.75rem;
+  text-align:center;
+  background:var(--white);
+  transition:all .25s ease;
+}
+
+.product-card:hover{
+  transform:translateY(-3px);
+}
+
+.product-card.best{
+  border-color:var(--cyan);
+  box-shadow:0 4px 16px rgba(74,159,190,.15);
+}
+
+.product-badge{
+  display:inline-block;
+  background:var(--cyan);
+  color:var(--white);
+  padding:4px 10px;
+  border-radius:4px;
+  font-size:10px;
+  font-weight:700;
+  text-transform:uppercase;
+  margin-bottom:1rem;
+}
+
+.product-icon{
+  font-size:48px;
+  margin-bottom:1rem;
+}
+
+.product-name{
+  font-size:15px;
+  font-weight:700;
+  margin-bottom:.75rem;
+}
+
+.product-desc{
+  font-size:13px;
+  color:var(--text-gray);
+  line-height:1.6;
+  margin-bottom:1.5rem;
+  min-height:60px;
+}
+
+/* =========================================
+INDUSTRIES
+========================================= */
+
+.industry-section{
+  margin:2rem 0;
+}
+
+.section-title{
+  font-size:22px;
+  font-weight:700;
+  text-align:center;
+  margin-bottom:1.5rem;
+}
+
+.section-title .red{
+  color:var(--red);
+}
+
+.industry-grid{
+  display:grid;
+  grid-template-columns:repeat(
+    auto-fill,
+    minmax(280px,1fr)
+  );
+
+  gap:1.25rem;
+}
+
+.industry-card{
+  border:1px solid var(--gray-med);
+  border-radius:8px;
+  padding:1.5rem;
+  background:var(--white);
+  text-align:left;
+  cursor:pointer;
+  transition:var(--transition);
+  font-family:inherit;
+}
+
+.industry-card:hover{
+  border-color:var(--cyan);
+  box-shadow:0 4px 16px rgba(74,159,190,.15);
+}
+
+.industry-icon{
+  font-size:32px;
+  margin-bottom:.75rem;
+}
+
+.industry-name{
+  font-size:15px;
+  font-weight:700;
+  margin-bottom:.5rem;
+}
+
+.industry-desc{
+  font-size:13px;
+  color:var(--text-gray);
+  line-height:1.6;
+}
+
+.industry-cta{
+  display:inline-block;
+  margin-top:1rem;
+  color:var(--navy);
+  font-weight:600;
+  font-size:13px;
+}
+
+/* =========================================
+PROGRESS
+========================================= */
+
+.pbar{
+  height:4px;
+  background:var(--gray-med);
+  border-radius:2px;
+  overflow:hidden;
+  margin-top:1rem;
+}
+
+.pfill{
+  height:100%;
+  width:100%;
+  background:linear-gradient(
+    90deg,
+    var(--cyan),
+    var(--navy)
+  );
+
+  animation:loadBar 1.2s ease;
+}
+
+/* =========================================
+MISC
+========================================= */
+
+.dvd{
+  height:1px;
+  background:var(--gray-med);
+  margin:1.75rem 0;
+}
+
+.footer{
+  background:var(--gray-light);
+  padding:2rem;
+  text-align:center;
+  font-size:12px;
+  color:var(--text-gray);
+  border-top:1px solid var(--gray-med);
+  margin-top:3rem;
+}
+
+@keyframes fadeIn{
+  from{
+    opacity:0;
+    transform:translateY(8px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+@keyframes loadBar{
+  from{
+    width:0;
+  }
+}
+
+@media(max-width:768px){
+
+  .topbar-nav{
+    display:none;
+  }
+
+  .hero h1{
+    font-size:30px;
+  }
+
+  .card{
+    padding:1.5rem;
+  }
+
+  .industry-grid,
+  .product-grid{
+    grid-template-columns:1fr;
+  }
+}
 
 </style>
 </head>
@@ -137,60 +539,290 @@ LAYOUT (UNCHANGED)
 <body>
 
 <div class="topbar-info">
-  <a>Call sales</a>
-  <a>Service Status</a>
-  <a>Contact us</a>
-  <a>About Moneris</a>
-  <a>Careers</a>
+  <a href="#">Call sales</a>
+  <a href="#">Service Status</a>
+  <a href="#">Contact us</a>
+  <a href="#">About Moneris</a>
+  <a href="#">Careers</a>
 </div>
 
 <div class="topbar">
-  <svg class="logo-svg" viewBox="0 0 160 52">
-    <text x="0" y="38" font-size="30" font-weight="700">Moneris</text>
-  </svg>
 
-  <div class="topbar-nav">
-    <a>Solutions</a>
-    <a>Industries</a>
-    <a>Partners</a>
-    <a>Resources</a>
-  </div>
+<svg class="logo-svg" viewBox="0 0 160 52">
+  <text x="0" y="38"
+    font-size="30"
+    font-weight="700">
+    Moneris
+  </text>
+</svg>
 
-  <div>
-    <button class="btn-login">Login</button>
-    <button class="btn-getstarted">Get Started</button>
-  </div>
+<div class="topbar-nav">
+  <a>Solutions</a>
+  <a>Industries</a>
+  <a>Partners</a>
+  <a>Resources</a>
+</div>
+
+<div class="topbar-right">
+  <button class="btn-login">Login</button>
+  <button class="btn-getstarted">Get Started</button>
+</div>
+
 </div>
 
 <div class="container">
 
 <div class="hero">
-  <h1>Moneris <span style="color:#E74C3C;">AI Product Selector</span></h1>
-  <p>Describe your business and instantly get a recommended payment setup tailored to your industry.</p>
+  <h1>
+    Moneris <span class="red">AI Product Selector</span>
+  </h1>
+
+  <p>
+    Describe your business and instantly get a recommended
+    payment setup tailored to your industry.
+  </p>
 </div>
 
 <div id="shell"></div>
 
+<div class="industry-section">
+
+<div class="section-title">
+  Explore solutions by <span class="red">industry.</span>
 </div>
 
-<div class="footer">© 2026 Moneris Solutions Corporation</div>
+<div class="industry-grid">
+
+<button class="industry-card"
+onclick="startQuiz('retail')">
+
+<div class="industry-icon">🛍️</div>
+<div class="industry-name">Retail</div>
+
+<div class="industry-desc">
+Sell in-store and online with unified commerce tools.
+</div>
+
+<div class="industry-cta">
+Explore retail →
+</div>
+
+</button>
+
+<button class="industry-card"
+onclick="startQuiz('restaurant')">
+
+<div class="industry-icon">🍽️</div>
+<div class="industry-name">Restaurants</div>
+
+<div class="industry-desc">
+POS systems for cafés, QSRs, and full-service dining.
+</div>
+
+<div class="industry-cta">
+Explore restaurants →
+</div>
+
+</button>
+
+<button class="industry-card"
+onclick="startQuiz('health')">
+
+<div class="industry-icon">💇</div>
+<div class="industry-name">Health & beauty</div>
+
+<div class="industry-desc">
+Payments and POS for salons, spas, and clinics.
+</div>
+
+<div class="industry-cta">
+Explore health →
+</div>
+
+</button>
+
+<button class="industry-card"
+onclick="startQuiz('enterprise')">
+
+<div class="industry-icon">🏢</div>
+<div class="industry-name">Enterprise</div>
+
+<div class="industry-desc">
+Tailored enterprise payment infrastructure at scale.
+</div>
+
+<div class="industry-cta">
+Explore enterprise →
+</div>
+
+</button>
+
+<button class="industry-card"
+onclick="startQuiz('professional')">
+
+<div class="industry-icon">👔</div>
+<div class="industry-name">Professional services</div>
+
+<div class="industry-desc">
+Invoices and remote payments for firms and services.
+</div>
+
+<div class="industry-cta">
+Explore services →
+</div>
+
+</button>
+
+<button class="industry-card"
+onclick="startQuiz('public')">
+
+<div class="industry-icon">🏛️</div>
+<div class="industry-name">Public sector</div>
+
+<div class="industry-desc">
+Modernize payments for government and institutions.
+</div>
+
+<div class="industry-cta">
+Explore public sector →
+</div>
+
+</button>
+
+<button class="industry-card"
+onclick="startQuiz('nonprofit')">
+
+<div class="industry-icon">❤️</div>
+<div class="industry-name">Not-for-profit</div>
+
+<div class="industry-desc">
+Donation and payment tools for charities and NFPs.
+</div>
+
+<div class="industry-cta">
+Explore not-for-profit →
+</div>
+
+</button>
+
+</div>
+</div>
+</div>
+
+<div class="footer">
+© 2026 Moneris Solutions Corporation
+</div>
 
 <script>
 
 /* =========================================
-PRODUCT LIBRARY (UNCHANGED)
+PRODUCTS
 ========================================= */
 
 const P = {
-goTerminal:{name:"Moneris Go Terminal",desc:"Portable smart terminal.",icon:"💳"},
-goPlus:{name:"Moneris Go Plus",desc:"Smart POS with printer.",icon:"📱"},
-goRetail:{name:"Moneris Go Retail",desc:"Retail POS system.",icon:"🛍️"},
-totalCommerce:{name:"Moneris Total Commerce",desc:"Unified commerce platform.",icon:"🌐"},
-goRestaurant:{name:"Moneris Go Restaurant",desc:"Restaurant POS system.",icon:"🍽️"},
-touchBistro:{name:"Moneris + TouchBistro",desc:"Tableside restaurant payments.",icon:"🍷"},
-monerisOnline:{name:"Moneris Online",desc:"Ecommerce payments.",icon:"💻"},
-paydInvoicing:{name:"PAYD Invoicing",desc:"Remote invoicing solution.",icon:"📧"},
-goPinPad:{name:"Moneris Go PIN Pad",desc:"Countertop payment device.",icon:"🔢"}
+
+goTerminal:{
+name:"Moneris Go Terminal",
+desc:"Portable smart terminal for modern businesses.",
+icon:"💳"
+},
+
+goPlus:{
+name:"Moneris Go Plus",
+desc:"Smart POS with built-in printer and touchscreen.",
+icon:"📱"
+},
+
+goRetail:{
+name:"Moneris Go Retail",
+desc:"Retail POS for inventory and in-store sales.",
+icon:"🛍️"
+},
+
+totalCommerce:{
+name:"Moneris Total Commerce",
+desc:"Unified commerce for online and in-store.",
+icon:"🌐"
+},
+
+goRestaurant:{
+name:"Moneris Go Restaurant",
+desc:"POS built for cafés and restaurants.",
+icon:"🍽️"
+},
+
+touchBistro:{
+name:"Moneris + TouchBistro",
+desc:"Restaurant management and tableside payments.",
+icon:"🍷"
+},
+
+monerisOnline:{
+name:"Moneris Online",
+desc:"Integrated ecommerce and online payments.",
+icon:"💻"
+},
+
+paydInvoicing:{
+name:"PAYD Invoicing",
+desc:"Send invoices and get paid remotely.",
+icon:"📧"
+},
+
+goPinPad:{
+name:"Moneris Go PIN Pad",
+desc:"Countertop payment device for enterprise.",
+icon:"🔢"
+}
+
+};
+
+/* =========================================
+INDUSTRIES
+========================================= */
+
+const industries = {
+
+homepage:{
+title:"Moneris AI Product Matcher",
+subtitle:"Describe your business and we’ll recommend the right setup."
+},
+
+retail:{
+title:"Retail AI Advisor",
+subtitle:"Tell us about your retail business."
+},
+
+restaurant:{
+title:"Restaurant AI Advisor",
+subtitle:"Tell us about your restaurant."
+},
+
+health:{
+title:"Health & Beauty AI Advisor",
+subtitle:"Tell us about your salon, spa, or clinic."
+},
+
+enterprise:{
+title:"Enterprise AI Advisor",
+subtitle:"Tell us about your organization."
+},
+
+professional:{
+title:"Professional Services AI Advisor",
+subtitle:"Tell us about your business."
+},
+
+public:{
+title:"Public Sector AI Advisor",
+subtitle:"Tell us about your organization."
+},
+
+nonprofit:{
+title:"Not-for-profit AI Advisor",
+subtitle:"Tell us about your mission."
+}
+
 };
 
 /* =========================================
@@ -200,171 +832,323 @@ INIT
 renderAI("homepage");
 
 /* =========================================
-NAV
+INDUSTRY NAV
 ========================================= */
 
 function startQuiz(industry){
-  renderAI(industry);
-  document.getElementById("shell").scrollIntoView({behavior:"smooth"});
+
+renderAI(industry);
+
+document.getElementById("shell")
+.scrollIntoView({
+behavior:"smooth"
+});
+
 }
 
 /* =========================================
-RENDER UI (UNCHANGED STRUCTURE)
+RENDER AI
 ========================================= */
 
 function renderAI(industry){
 
+const cfg = industries[industry];
+
 document.getElementById("shell").innerHTML = `
+
 <div class="card">
 
-<div class="card-label">${industry.toUpperCase()}</div>
+<div class="card-label">
+${industry === "homepage"
+? "AI EXPERIENCE"
+: industry.toUpperCase()}
+</div>
 
-<div class="card-title">AI Product Selector</div>
+<div class="card-title">
+${cfg.title}
+</div>
 
-<div class="card-subtitle">Describe your business...</div>
+<div class="card-subtitle">
+${cfg.subtitle}
+</div>
 
-<textarea id="aiInput" class="form-input"></textarea>
+<div style="
+display:flex;
+gap:8px;
+flex-wrap:wrap;
+margin-bottom:18px;
+">
 
-<button onclick="runAI('${industry}')">Find my setup</button>
+<span class="path-badge">
+AI powered
+</span>
 
 </div>
+
+<textarea
+id="aiInput"
+class="form-input"
+placeholder="Describe your business, goals, current setup, and what you're looking for..."
+></textarea>
+
+<div style="
+display:flex;
+gap:10px;
+margin-top:18px;
+flex-wrap:wrap;
+">
+
+<button
+class="btn-submit"
+onclick="runAI('${industry}')"
+>
+Find my setup
+</button>
+
+${
+industry !== "homepage"
+? `
+<button
+class="btn-outline"
+style="width:auto;"
+onclick="renderAI('homepage')"
+>
+Back to homepage
+</button>
+`
+: ``
+}
+
+</div>
+
+</div>
+
 `;
+
 }
 
 /* =========================================
-🔥 ONLY LOGIC UPGRADED (NO UI CHANGES)
+AI ENGINE
 ========================================= */
 
 function runAI(industry){
 
-const text = document.getElementById("aiInput").value.toLowerCase();
+const text = document
+.getElementById("aiInput")
+.value
+.toLowerCase();
+
 if(!text.trim()) return;
 
-/* KEEP ORIGINAL LOADING UI */
 document.getElementById("shell").innerHTML = `
+
 <div class="card">
-<div class="card-title">Analyzing your business...</div>
-<div class="pbar"><div class="pfill"></div></div>
-</div>`;
+
+<div class="card-label">
+AI ANALYSIS
+</div>
+
+<div class="card-title">
+Analyzing your business...
+</div>
+
+<div class="card-subtitle">
+Matching your needs against Moneris solutions.
+</div>
+
+<div class="pbar">
+<div class="pfill"></div>
+</div>
+
+</div>
+
+`;
 
 setTimeout(()=>{
 
 let recs = [];
-let reasons = {};
-let profile = {
-industry,
-channels:[],
-goals:[],
-size:"Small Business",
-confidence:82
-};
+let enterprise = false;
 
-let enterprise =
+/* ENTERPRISE DETECTION */
+
+if(
 text.includes("multi") ||
-text.includes("franchise") ||
+text.includes("locations") ||
 text.includes("enterprise") ||
-text.includes("chain") ||
-text.includes("locations");
-
-/* ===== PROFILE ENGINE (UPGRADED) ===== */
-
-if(text.includes("online") || text.includes("ecommerce")) profile.channels.push("Online");
-if(text.includes("store") || text.includes("retail")) profile.channels.push("In-Store");
-if(text.includes("mobile") || text.includes("on the go")) profile.channels.push("Mobile");
-if(text.includes("grow") || text.includes("expand")) profile.goals.push("Growth");
-if(text.includes("inventory")) profile.goals.push("Inventory");
-
-if(enterprise){
-profile.size = "Enterprise";
-profile.confidence = 94;
+text.includes("franchise") ||
+text.includes("chain")
+){
+enterprise = true;
 }
 
-/* ===== INDUSTRY LOGIC (UPGRADED ONLY) ===== */
+/* RETAIL */
 
 if(industry === "retail"){
-recs = enterprise
-? ["goPinPad","totalCommerce","goRetail"]
-: ["goRetail","goTerminal","totalCommerce"];
 
-reasons.goRetail = "Retail POS for in-store sales and inventory.";
-reasons.totalCommerce = "Unified online + in-store commerce.";
-reasons.goTerminal = "Portable payments anywhere.";
+recs.push("goRetail");
+recs.push("goTerminal");
+
+if(
+text.includes("online") ||
+text.includes("ecommerce")
+){
+recs.unshift("totalCommerce");
 }
+
+if(enterprise){
+recs.unshift("goPinPad");
+}
+
+}
+
+/* RESTAURANT */
 
 else if(industry === "restaurant"){
-recs = ["goRestaurant","goTerminal"];
 
-if(text.includes("fine dining") || text.includes("tableside")){
+recs.push("goRestaurant");
+recs.push("goTerminal");
+
+if(
+text.includes("tableside") ||
+text.includes("fine dining")
+){
 recs.unshift("touchBistro");
-reasons.touchBistro = "Tableside restaurant experience.";
 }
 
-reasons.goRestaurant = "Restaurant ordering and POS workflows.";
-reasons.goTerminal = "Mobile payment flexibility.";
 }
+
+/* HEALTH */
 
 else if(industry === "health"){
-recs = ["goPlus","goTerminal"];
+
+recs.push("goPlus");
+recs.push("goTerminal");
+
+if(
+text.includes("retail") ||
+text.includes("products")
+){
+recs.unshift("goRetail");
 }
+
+}
+
+/* PROFESSIONAL */
 
 else if(industry === "professional"){
-recs = ["paydInvoicing","goTerminal"];
-if(text.includes("online") || text.includes("remote")){
+
+recs.push("paydInvoicing");
+recs.push("goTerminal");
+
+if(
+text.includes("remote") ||
+text.includes("online")
+){
 recs.unshift("monerisOnline");
 }
+
 }
+
+/* PUBLIC */
 
 else if(industry === "public"){
-recs = ["goPinPad","monerisOnline","goTerminal"];
+
+recs.push("goPinPad");
+recs.push("monerisOnline");
+recs.push("goTerminal");
+
 }
+
+/* NONPROFIT */
 
 else if(industry === "nonprofit"){
-recs = ["monerisOnline","paydInvoicing","goTerminal"];
+
+recs.push("monerisOnline");
+recs.push("paydInvoicing");
+recs.push("goTerminal");
+
 }
+
+/* ENTERPRISE */
 
 else if(industry === "enterprise"){
-recs = ["goPinPad","totalCommerce","monerisOnline"];
+
+enterprise = true;
+
+recs.push("goPinPad");
+recs.push("totalCommerce");
+recs.push("monerisOnline");
+
 }
 
-/* fallback */
+/* HOMEPAGE */
+
 else{
-if(text.includes("restaurant")) return runAI("restaurant");
-if(text.includes("spa")) return runAI("health");
-return runAI("retail");
+
+if(
+text.includes("restaurant") ||
+text.includes("cafe")
+){
+runAI("restaurant");
+return;
 }
 
-/* ===== SCORING (UNCHANGED STYLE) ===== */
+if(
+text.includes("salon") ||
+text.includes("spa")
+){
+runAI("health");
+return;
+}
 
-let summary =
-`Your business operates in ${industry} with ${
-profile.channels.join(" + ") || "standard channels"}.`;
+runAI("retail");
+return;
 
-let score = 5;
-if(profile.channels.length > 1) score += 2;
-if(enterprise) score += 2;
-if(profile.goals.length) score += 1;
+}
 
-/* ===== RENDER (YOUR ORIGINAL FUNCTION USED) ===== */
+renderResults(recs, enterprise, industry);
 
-renderResults(recs, profile, summary, score, reasons);
+},1400);
 
-},1200);
 }
 
 /* =========================================
-RESULTS (UNCHANGED STRUCTURE EXPECTED)
+RESULTS
 ========================================= */
 
-function renderResults(recs, profile, summary, score, reasons){
+function renderResults(recs, enterprise, industry){
 
 const unique = [...new Set(recs)];
 
 document.getElementById("shell").innerHTML = `
+
 <div class="card">
 
-<div class="card-title">AI RESULTS</div>
+<span class="ep-badge ${
+enterprise ? "ep-b" : "ep-g"
+}">
 
-<div class="card-subtitle">${summary}</div>
+${
+enterprise
+? "Enterprise recommendation"
+: "Recommended setup"
+}
+
+</span>
+
+<div class="card-title">
+Here's what we'd recommend.
+</div>
+
+<div class="card-subtitle">
+
+${
+enterprise
+? "Your business may benefit from a tailored enterprise setup."
+: "Based on your business needs, these solutions are the strongest fit."
+}
+
+</div>
 
 <div class="product-grid">
 
@@ -373,31 +1157,73 @@ ${unique.map((k,i)=>{
 const p = P[k];
 
 return `
-<div class="product-card">
 
-<div class="product-icon">${p.icon}</div>
+<div class="product-card ${i===0?'best':''}">
 
-<div class="product-name">${p.name}</div>
+${
+i===0
+? `<div class="product-badge">Best option</div>`
+: `<div style="height:28px;"></div>`
+}
 
-<div class="product-desc">${p.desc}</div>
-
-<div style="font-size:12px;">
-${reasons[k] || "Recommended"}
+<div class="product-icon">
+${p.icon}
 </div>
 
-<button>Learn more</button>
+<div class="product-name">
+${p.name}
+</div>
 
-</div>`;
+<div class="product-desc">
+${p.desc}
+</div>
+
+<button class="btn-primary">
+Learn more
+</button>
+
+<button class="btn-outline">
+Talk to sales
+</button>
+
+</div>
+
+`;
+
 }).join("")}
 
 </div>
 
-<div style="font-size:32px;font-weight:700;">
-Score: ${score}/10
+<div class="dvd"></div>
+
+<div style="
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+">
+
+<button
+class="btn-outline"
+style="width:auto;"
+onclick="renderAI('${industry}')"
+>
+Try again
+</button>
+
+<button
+class="btn-outline"
+style="width:auto;"
+onclick="renderAI('homepage')"
+>
+Homepage
+</button>
+
 </div>
 
 </div>
+
 `;
+
 }
 
 </script>
